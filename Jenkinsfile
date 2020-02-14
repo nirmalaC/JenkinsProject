@@ -19,7 +19,7 @@ pipeline {
                parallel {
                  stage('Cucumber Results') {
                    steps {
-                     archiveArtifacts(artifacts: 'target/api-cucumber-reports/', allowEmptyArchive: true)
+                     archiveArtifacts(artifacts: 'api-cucumber-reports.txt', allowEmptyArchive: true)
                    }
                  }
                }
