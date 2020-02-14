@@ -10,17 +10,12 @@ pipeline {
         }
         stage('API Test') {
             steps {
-               sh "mvn clean verify -Dtags='type:ApiTests'"
+               sh "mvn test -Dtags='type:ApiTests'"
             }
         }
-        stage('UI Test') {
+        stage('API Test') {
             steps {
-                sh 'mvn test -Dcucumber.options="--tags @FeatureAutomationTest"'
-            }
-        }
-        stage('UI Test Reports') {
-            steps {
-                archiveArtifacts(artifacts: 'target/ui-cucumber-reports/', allowEmptyArchive: true)
+               sh "mvn test -Dtags='type:FeatureAutomationTest'"
             }
         }
     }

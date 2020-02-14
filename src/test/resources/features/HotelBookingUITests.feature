@@ -4,6 +4,7 @@ Feature: Hotel booking reservation
   I want to use the book hotel reservation system
   So that I can book my hotel reservations
 
+  @FeatureAutomationTest
   Scenario Outline: User should be able to save the hotel booking with or without deposit amount.
     Given I enter vaild details : <firstname>, <surename>, <price>, <deposit>, <checkin_date>, <checkout_date>
     When I click on the save button
@@ -13,6 +14,7 @@ Feature: Hotel booking reservation
       | Jack      | Bob      | 380   | true    | 20           | 25            |
       | Jim       | Jole     | 650   | false   | 16           | 22            |
 
+  @FeatureAutomationTest
   Scenario Outline: User should be able to delete the saved bookings successfully.
     Given I enter vaild details : <firstname>, <surename>, <price>, <deposit>, <checkin_date>, <checkout_date>
     And I click on the save button
