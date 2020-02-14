@@ -9,18 +9,21 @@ pipeline {
             }
         }
         stage('API Test') {
-            steps {
-                echo 'mvn test -Dcucumber.options="--tags @ApiTests"'
-            }
-        }
-        stage('API Test Reports') {
-            steps {
-                archiveArtifacts(artifacts: 'target/api-cucumber-reports/', allowEmptyArchive: true)
-            }
+            try {
+                       sh "mvn clean verify -Dtags='type:ApiTests'"
+                   } catch (err) {
+
+                   } finally {
+                       publishHTML (target: [
+                       reportDir: 'target/api-cucumber-reports/',
+                       reportFiles: 'index.html',
+                       reportName: "API tests report"
+                       ])
+                   }
         }
         stage('UI Test') {
             steps {
-                echo 'mvn test -Dcucumber.options="--tags @FeatureAutomationTest"'
+                sh 'mvn test -Dcucumber.options="--tags @FeatureAutomationTest"'
             }
         }
         stage('UI Test Reports') {
