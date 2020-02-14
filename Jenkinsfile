@@ -15,14 +15,9 @@ pipeline {
                 }
             }
           }
-          stage('Archive') {
-               steps {
-                 archiveArtifacts allowEmptyArchive: true, artifacts: 'Output', onlyIfSuccessful: true
-               }
-          }
           stage('Make Directory') {
                 steps {
-                  echo "mkdir -p CucumberReport"
+                  powershell label: '', script: 'mkdir -p CucumberReport'
                 }
           }
           stage('Cucumber Reports'){
@@ -32,7 +27,7 @@ pipeline {
           }
           stage('Quality Chart') {
                 steps {
-                  publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: 'Output', reportFiles: 'index.html', reportName: 'HTML Report', reportTitles: ''])
+                  publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: 'CucumberReport', reportFiles: 'index.html', reportName: 'HTML Report', reportTitles: ''])
 
                }
           }
