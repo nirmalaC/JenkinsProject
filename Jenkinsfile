@@ -28,12 +28,12 @@ pipeline {
             parallel {
               stage('Cucumber Report') {
                 steps {
-                  cucumber(fileIncludePattern: '**/*.json', fileExcludePattern: '**/*usage.json', jsonReportDirectory: 'target/api-cucumber-reports/json/', sortingMethod: 'ALPHABETICAL')
+                  cucumber(fileIncludePattern: '**/*.json', fileExcludePattern: '**/*usage.json', sortingMethod: 'ALPHABETICAL')
                 }
               }
               stage('Quality Chart') {
                 steps {
-                  publishHTML(allowMissing: false, alwaysLinkToLastBuild: true, keepAll: false, reportDir: 'target/api-cucumber-reports/html/', reportFiles: 'API-Test-overview-chart.html', reportName: 'API Test Report')
+                  publishHTML(allowMissing: false, alwaysLinkToLastBuild: true, keepAll: false, reportFiles: 'API-Test-overview-chart.html', reportName: 'API Test Report')
                 }
               }
             }
