@@ -9,17 +9,17 @@ pipeline {
             }
         }
         stage('API Test') {
-            try {
-                       sh "mvn clean verify -Dtags='type:ApiTests'"
-                   } catch (err) {
+        try {
+           sh "mvn clean verify -Dtags='type:ApiTests'"
+        } catch (err) {
 
-                   } finally {
-                       publishHTML (target: [
-                       reportDir: 'target/api-cucumber-reports/',
-                       reportFiles: 'index.html',
-                       reportName: "API tests report"
-                       ])
-                   }
+           } finally {
+               publishHTML (target: [
+               reportDir: 'target/api-cucumber-reports/',
+               reportFiles: 'index.html',
+               reportName: "API tests report"
+               ])
+           }
         }
         stage('UI Test') {
             steps {
