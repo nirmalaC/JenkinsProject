@@ -16,11 +16,9 @@ pipeline {
             }
           }
           stage('Archive') {
-                 stage('Cucumber Results') {
-                   steps {
-                     archiveArtifacts allowEmptyArchive: true, artifacts: 'Output', onlyIfSuccessful: true
-                   }
-                 }
+               steps {
+                 archiveArtifacts allowEmptyArchive: true, artifacts: 'Output', onlyIfSuccessful: true
+               }
           }
           stage('Make Directory') {
                 steps {
