@@ -13,7 +13,7 @@ pipeline {
                sh "mvn test -Dtags='type:ApiTests'"
             }
         }
-        stage('API Test') {
+        stage('UI Test') {
             steps {
                sh "mvn test -Dtags='type:FeatureAutomationTest'"
             }
