@@ -13,10 +13,12 @@ pipeline {
                echo "mvn test -Dtags='type:ApiTests'"
             }
         }
-        stage('API Test Reports') {
-            steps {
+        stage('Archive Reports') {
+          parallel {
+            stage('API Cucumber Results') {
+              steps {
                 archiveArtifacts(artifacts: 'target/api-cucumber-reports/', allowEmptyArchive: true)
-            }
+              }
         }
         stage('UI Test') {
             steps {
