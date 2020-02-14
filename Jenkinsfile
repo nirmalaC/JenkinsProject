@@ -28,11 +28,9 @@ pipeline {
                }
              }
           stage('Make Directory') {
-            parallel {
                 steps {
                   echo "mkdir -p CucumberReport"
                 }
-            }
           }
           node {
            stage ('Record Reports')
