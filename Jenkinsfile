@@ -27,14 +27,17 @@ pipeline {
                  }
                }
              }
-          stage('Publish') {
+          stage('Make Directory') {
             parallel {
                 steps {
                   echo "mkdir -p CucumberReport"
                 }
-                step([$class: 'CucumberTestReportPublisher', reportsDirectory: 'CucumberReport', fileIncludePattern: '**/*.json'])
             }
-          }   
+          }
+          node {
+           stage ('Record Reports')
+           step([$class: 'CucumberTestReportPublisher', reportsDirectory: 'CucumberReport', fileIncludePattern: '**/*.json'])
+          }
           stage('Quality Chart') {
                 steps {
                   publishHTML(allowMissing: false, alwaysLinkToLastBuild: true, keepAll: false, reportDir: 'CucumberReport', reportFiles: 'API-Test-overview-chart.html', reportName: 'Test Report')
