@@ -11,7 +11,7 @@ pipeline {
           stage('API Test') {
             steps {
               withMaven(maven: 'maven_3_6_0') {
-                echo "mvn clean verify -Dtags='type:ApiTests'"
+                sh 'mvn test -Dcucumber.options="--tags @ApiTests"'
               }
             }
           }
