@@ -15,25 +15,11 @@ pipeline {
               }
             }
           }
-          stage('Archive') {
-               parallel {
-                 stage('Cucumber Results') {
-                   steps {
-                     archiveArtifacts(artifacts: 'output/*.txt', allowEmptyArchive: true)
-                   }
-                 }
-               }
-             }
           stage('Publish') {
             parallel {
               stage('Cucumber Report') {
                 steps {
                   cucumber(fileIncludePattern: '**/*.json', fileExcludePattern: '**/*usage.json', sortingMethod: 'ALPHABETICAL')
-                }
-              }
-              stage('Quality Chart') {
-                steps {
-                  publishHTML(allowMissing: false, alwaysLinkToLastBuild: true, keepAll: false, reportFiles: 'API-Test-overview-chart.html', reportName: 'API Test Report')
                 }
               }
             }
