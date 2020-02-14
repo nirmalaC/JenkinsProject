@@ -8,10 +8,10 @@ pipeline {
                 echo 'mvn clean install -DskipTests=true'
               }
             }
-          stage('API Test') {
+          stage('Test') {
             steps {
               withMaven(maven: 'maven_3_6_0') {
-                echo 'mvn test -Dcucumber.options="--tags @ApiTests"'
+                echo 'mvn test'
               }
             }
           }
@@ -19,7 +19,7 @@ pipeline {
                parallel {
                  stage('Cucumber Results') {
                    steps {
-                     archiveArtifacts(artifacts: 'api-cucumber-reports.txt', allowEmptyArchive: true)
+                     archiveArtifacts(artifacts: 'output/*.txt', allowEmptyArchive: true)
                    }
                  }
                }
