@@ -10,22 +10,22 @@ pipeline {
         }
         stage('API Test') {
             steps {
-            echo 'mvn test -Dcucumber.options="--tags @ApiTests"'
+                echo 'mvn test -Dcucumber.options="--tags @ApiTests"'
             }
         }
         stage('API Test Reports') {
             steps {
-            archiveArtifacts(artifacts: 'target/api-cucumber-reports/', allowEmptyArchive: true)
+                archiveArtifacts(artifacts: 'target/api-cucumber-reports/', allowEmptyArchive: true)
             }
         }
         stage('UI Test') {
             steps {
-            echo 'mvn test -Dcucumber.options="--tags @FeatureAutomationTest"'
+                echo 'mvn test -Dcucumber.options="--tags @FeatureAutomationTest"'
             }
         }
         stage('UI Test Reports') {
             steps {
-            archiveArtifacts(artifacts: 'target/ui-cucumber-reports/', allowEmptyArchive: true)
+                archiveArtifacts(artifacts: 'target/ui-cucumber-reports/', allowEmptyArchive: true)
             }
         }
     }
