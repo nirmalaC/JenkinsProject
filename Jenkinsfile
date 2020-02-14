@@ -3,43 +3,41 @@ pipeline {
       stages {
             stage('checkout') {
               steps {
-                git branch: 'master',
-                  url: 'https://github.com/nirmalaC/HotelBookingSystem.git'
-                echo 'mvn clean install -DskipTests=true'
+                checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: 'https://github.com/nirmalaC/HotelBookingSystem.git']]])
               }
             }
           stage('Test') {
             steps {
-              withMaven(maven: 'maven_3_6_0') {
-                echo 'mvn test'
-                echo "mkdir -p Output"
-                writeFile file: "output/Reports.txt", text: "This file is useful, need to archive it."
-                writeFile file: "output/uselessfile.md", text: "This file is useless, no need to archive it."
-              }
+                withMaven(jdk: 'JAVA_HOME', maven: 'maven_3_6_0') {
+                     echo 'Test Started'
+                     sh label: '', script: 'mvn test -Dcucumber.options="--tags @ApiTests"'
+                     echo 'Test Finished'
+                }
             }
           }
           stage('Archive') {
-               parallel {
                  stage('Cucumber Results') {
                    steps {
-                     archiveArtifacts (artifacts: 'Output/*.txt', excludes: 'output/*.md')
+                     archiveArtifacts allowEmptyArchive: true, artifacts: 'Output', onlyIfSuccessful: true
                    }
                  }
-               }
-             }
+          }
           stage('Make Directory') {
                 steps {
                   echo "mkdir -p CucumberReport"
                 }
           }
-          node {
-           stage ('Record Reports')
-           step([$class: 'CucumberTestReportPublisher', reportsDirectory: 'CucumberReport', fileIncludePattern: '**/*.json'])
+          stage('Cucumber Reports'){
+
+            cucumber failedFeaturesNumber: -1, failedScenariosNumber: -1, failedStepsNumber: -1, fileIncludePattern: '**/*.json', pendingStepsNumber: -1, skippedStepsNumber: -1, sortingMethod: 'ALPHABETICAL', undefinedStepsNumber: -1
+
           }
           stage('Quality Chart') {
                 steps {
-                  publishHTML(allowMissing: false, alwaysLinkToLastBuild: true, keepAll: false, reportDir: 'CucumberReport', reportFiles: 'API-Test-overview-chart.html', reportName: 'Test Report')
-                }
+
+                  publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: 'Output', reportFiles: 'index.html', reportName: 'HTML Report', reportTitles: ''])
+
+               }
           }
       }
 }
