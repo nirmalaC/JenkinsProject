@@ -10,7 +10,7 @@ pipeline {
         }
         stage('API Test') {
             steps {
-                withMaven(maven: 'maven_3_2') {
+                withMaven(maven: 'maven_3_6_0') {
                     echo "mvn clean verify -Dtags='type:ApiTests'"
                 }
             }
