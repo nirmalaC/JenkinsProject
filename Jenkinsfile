@@ -9,7 +9,9 @@ pipeline {
             }
         }
         stage('API Test') {
-           sh "mvn clean verify -Dtags='type:ApiTests'"
+            steps {
+               sh "mvn clean verify -Dtags='type:ApiTests'"
+            }
         }
         stage('UI Test') {
             steps {
