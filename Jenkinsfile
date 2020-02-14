@@ -9,11 +9,9 @@ pipeline {
             }
         }
         stage('API Test') {
-        try {
            sh "mvn clean verify -Dtags='type:ApiTests'"
-        } catch (err) {
 
-           } finally {
+           finally {
                publishHTML (target: [
                reportDir: 'target/api-cucumber-reports/',
                reportFiles: 'index.html',
