@@ -10,14 +10,6 @@ pipeline {
         }
         stage('API Test') {
            sh "mvn clean verify -Dtags='type:ApiTests'"
-
-           finally {
-               publishHTML (target: [
-               reportDir: 'target/api-cucumber-reports/',
-               reportFiles: 'index.html',
-               reportName: "API tests report"
-               ])
-           }
         }
         stage('UI Test') {
             steps {
