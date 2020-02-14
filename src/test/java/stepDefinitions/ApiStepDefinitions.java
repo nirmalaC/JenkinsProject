@@ -77,6 +77,7 @@ public class ApiStepDefinitions {
             Log.info("id got :: " + id);
             Assert.assertNotEquals(id.toString(), bookingId);
         }
+        steps.postUserDetails(URL).extract().jsonPath().getString("bookingid");
     }
 
 }
