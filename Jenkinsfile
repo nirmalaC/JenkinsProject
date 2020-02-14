@@ -19,6 +19,8 @@ pipeline {
               steps {
                 archiveArtifacts(artifacts: 'target/api-cucumber-reports/', allowEmptyArchive: true)
               }
+            }
+          }
         }
         stage('UI Test') {
             steps {
