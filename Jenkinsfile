@@ -5,12 +5,12 @@ pipeline {
             steps {
             git branch: 'master',
             url: 'https://github.com/nirmalaC/HotelBookingSystem.git'
-            sh 'mvn clean install -DskipTests=true'
+            echo 'mvn clean install -DskipTests=true'
             }
         }
         stage('API Test') {
             steps {
-            sh 'mvn test -Dcucumber.options="--tags @ApiTests"'
+            echo 'mvn test -Dcucumber.options="--tags @ApiTests"'
             }
         }
         stage('API Test Reports') {
@@ -20,7 +20,7 @@ pipeline {
         }
         stage('UI Test') {
             steps {
-            sh 'mvn test -Dcucumber.options="--tags @FeatureAutomationTest"'
+            echo 'mvn test -Dcucumber.options="--tags @FeatureAutomationTest"'
             }
         }
         stage('UI Test Reports') {
