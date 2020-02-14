@@ -10,7 +10,7 @@ pipeline {
             steps {
                 withMaven(jdk: 'JAVA_HOME', maven: 'maven_3_6_0') {
                      echo 'Test Started'
-                     sh label: '', script: 'mvn test -Dcucumber.options="--tags @ApiTests"'
+                     powershell label: '', script: 'mvn test -Dcucumber.options="--tags @ApiTests"'
                      echo 'Test Finished'
                 }
             }
